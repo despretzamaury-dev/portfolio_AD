@@ -135,16 +135,20 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Placeholder Section for Images */}
-              <div className="mt-16 pt-10 border-t border-gray-200/60 flex flex-col items-center">
-                <p className="text-xs md:text-sm text-[#888] uppercase tracking-[0.2em] mb-6 font-medium">Extraits de la présentation</p>
-                <div className="w-full h-80 bg-[#fbf9f6] rounded-2xl flex items-center justify-center border-2 border-dashed border-[#e0d6c8] group transition cursor-pointer hover:bg-[#f2efe9]">
-                  <div className="text-center text-[#AFA492]">
-                    <svg className="mx-auto h-12 w-12 mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                    <p className="font-light tracking-wide text-sm px-4">Espace réservé à vos slides LVMH.<br />(Ajoutez vos images dans le code si vous le souhaitez)</p>
-                  </div>
+              {/* Galerie LVMH */}
+              <div className="mt-16 pt-10 border-t border-gray-200/60">
+                <p className="text-xs md:text-sm text-[#888] uppercase tracking-[0.2em] mb-6 font-medium text-center">Extraits de la présentation</p>
+                <div className="flex gap-6 overflow-x-auto pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x">
+                  {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                    <Image 
+                      key={`lvmh-${num}`}
+                      src={`/ign/${num}.png`} 
+                      alt={`Slide LVMH ${num}`} 
+                      width={800} 
+                      height={450} 
+                      className="rounded-xl object-cover shrink-0 shadow-md snap-center border border-gray-200/50 w-[85%] md:w-[60%] lg:w-[45%]" 
+                    />
+                  ))}
                 </div>
               </div>
 
@@ -232,16 +236,20 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Placeholder Section for Images */}
-              <div className="mt-16 pt-10 border-t border-[#3b5949] flex flex-col items-center">
-                <p className="text-xs md:text-sm text-[#A5BAAC] uppercase tracking-[0.2em] mb-6 font-medium">Extraits de la présentation</p>
-                <div className="w-full h-80 bg-[#24382D] rounded-2xl flex items-center justify-center border-2 border-dashed border-[#3b5949] group transition cursor-pointer hover:bg-[#1f2f26]">
-                  <div className="text-center text-[#4A6B56]">
-                    <svg className="mx-auto h-12 w-12 mb-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                    <p className="font-light tracking-wide text-sm px-4">Espace réservé à vos slides FairWay.<br />(Ajoutez vos images dans le code si vous le souhaitez)</p>
-                  </div>
+              {/* Galerie FairWay */}
+              <div className="mt-16 pt-10 border-t border-[#3b5949]">
+                <p className="text-xs md:text-sm text-[#A5BAAC] uppercase tracking-[0.2em] mb-6 font-medium text-center">Extraits de la présentation</p>
+                <div className="flex gap-6 overflow-x-auto pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x">
+                  {Array.from({length: 18}, (_, i) => i + 1).map((num) => (
+                    <Image 
+                      key={`fairway-${num}`}
+                      src={`/FairWay/${num}.jpg`} 
+                      alt={`Slide FairWay ${num}`} 
+                      width={800} 
+                      height={450} 
+                      className="rounded-xl object-cover shrink-0 shadow-[0_10px_30px_rgba(0,0,0,0.4)] snap-center border border-[#3b5949] w-[85%] md:w-[60%] lg:w-[45%]" 
+                    />
+                  ))}
                 </div>
               </div>
 
@@ -359,16 +367,20 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Placeholder Section for Images */}
-              <div className="mt-16 pt-10 border-t border-[#333] flex flex-col items-center">
-                <p className="text-xs md:text-sm text-[#666] uppercase tracking-[0.2em] mb-6 font-medium">Extraits de la présentation</p>
-                <div className="w-full h-80 bg-[#161616] rounded-2xl flex items-center justify-center border-2 border-dashed border-[#333] group transition cursor-pointer hover:bg-[#1A1A1A]">
-                  <div className="text-center text-[#555]">
-                    <svg className="mx-auto h-12 w-12 mb-4 group-hover:scale-110 group-hover:text-[#00D084] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                    <p className="font-light tracking-wide text-sm px-4">Espace réservé à vos slides UniSphere.<br />(Ajoutez vos images dans le code si vous le souhaitez)</p>
-                  </div>
+              {/* Galerie UniSphere */}
+              <div className="mt-16 pt-10 border-t border-[#333]">
+                <p className="text-xs md:text-sm text-[#666] uppercase tracking-[0.2em] mb-6 font-medium text-center">Extraits de la présentation</p>
+                <div className="flex gap-6 overflow-x-auto pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x">
+                  {[1, 2, 3, 4, 5, 6].map((num) => (
+                    <Image 
+                      key={`unisphere-${num}`}
+                      src={`/UniSphere/${num}.jpg`} 
+                      alt={`Slide UniSphere ${num}`} 
+                      width={800} 
+                      height={450} 
+                      className="rounded-xl object-cover shrink-0 shadow-[0_10px_30px_rgba(0,0,0,0.5)] snap-center border border-[#333] w-[85%] md:w-[60%] lg:w-[45%]" 
+                    />
+                  ))}
                 </div>
               </div>
 

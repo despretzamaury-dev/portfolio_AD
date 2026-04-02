@@ -6,7 +6,7 @@ export default function Home() {
       {/* Background Image Globale */}
       <div className="fixed inset-0 z-0">
         <Image
-          src="/background.jpg"
+          src="/background.JPG"
           alt="Amaury Despretz Background"
           fill
           className="object-cover object-center"

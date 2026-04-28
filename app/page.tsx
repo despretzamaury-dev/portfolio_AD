@@ -1,4 +1,73 @@
+"use client";
 import Image from "next/image";
+import React, { useEffect, useRef } from "react";
+
+const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children: React.ReactNode; speed?: number, gapClass?: string }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const content = contentRef.current;
+    if (!container || !content) return;
+
+    let animationFrameId: number;
+    let isInteracting = false;
+    let interactionTimeout: NodeJS.Timeout;
+
+    const stopInteracting = () => {
+        clearTimeout(interactionTimeout);
+        interactionTimeout = setTimeout(() => { isInteracting = false; }, 300);
+    };
+
+    const handleInteract = () => {
+        isInteracting = true;
+        stopInteracting();
+    };
+
+    container.addEventListener('touchstart', handleInteract, {passive: true});
+    container.addEventListener('touchmove', handleInteract, {passive: true});
+    container.addEventListener('wheel', handleInteract, {passive: true});
+    container.addEventListener('mousedown', handleInteract, {passive: true});
+
+    const scroll = () => {
+      if (!isInteracting && container && content) {
+        container.scrollLeft += speed;
+        // Check wrap-around
+        const halfWidth = content.scrollWidth / 2;
+        if (container.scrollLeft >= halfWidth) {
+          container.scrollLeft -= halfWidth;
+        } else if (container.scrollLeft <= 0 && speed < 0) {
+          container.scrollLeft += halfWidth;
+        }
+      }
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    animationFrameId = requestAnimationFrame(scroll);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      clearTimeout(interactionTimeout);
+      container.removeEventListener('touchstart', handleInteract);
+      container.removeEventListener('touchmove', handleInteract);
+      container.removeEventListener('wheel', handleInteract);
+      container.removeEventListener('mousedown', handleInteract);
+    };
+  }, [speed]);
+
+  return (
+    <div 
+      ref={containerRef}
+      className="flex overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden w-full items-stretch"
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
+      <div ref={contentRef} className={`flex shrink-0 w-max items-stretch ${gapClass}`}>
+        {children}
+        {children}
+      </div>
+    </div>
+  );
+};
 
 
 const ProjectsTrack = () => (
@@ -462,14 +531,10 @@ export default function Home() {
           Container Défilant Horizontal 
           snap-x et snap-mandatory forcent l'alignement de chaque carte.
         */}
-                {/* Container Défilant Horizontal */}
-        <div className="group flex overflow-hidden w-full pb-16">
-          <div className="flex shrink-0 animate-marquee-slow pr-8 gap-8 items-stretch">
+        <div className="w-full pb-16">
+          <AutoScroll speed={1} gapClass="pr-8 gap-8">
             <ProjectsTrack />
-          </div>
-          <div className="flex shrink-0 animate-marquee-slow pr-8 gap-8 items-stretch" aria-hidden="true">
-            <ProjectsTrack />
-          </div>
+          </AutoScroll>
         </div>
       </section>
 
@@ -480,9 +545,8 @@ export default function Home() {
         </h2>
 
         {/* Container Défilant Horizontal pour les compétences */}
-                {/* Container Défilant Horizontal pour les compétences */}
-        <div className="group flex overflow-hidden w-full pb-12">
-          <div className="flex shrink-0 animate-marquee-fast pr-6 gap-6 items-stretch">
+        <div className="w-full pb-12">
+          <AutoScroll speed={1.5} gapClass="pr-6 gap-6">
             {skillsList.map((skill, index) => (
               <div key={index} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
                 <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
@@ -495,21 +559,7 @@ export default function Home() {
                 </h3>
               </div>
             ))}
-          </div>
-          <div className="flex shrink-0 animate-marquee-fast pr-6 gap-6 items-stretch" aria-hidden="true">
-            {skillsList.map((skill, index) => (
-              <div key={`dup-${index}`} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
-                <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    {skill.icon}
-                  </svg>
-                </div>
-                <h3 className="text-white font-medium tracking-widest uppercase text-[11px] md:text-sm leading-tight">
-                  {skill.name}
-                </h3>
-              </div>
-            ))}
-          </div>
+          </AutoScroll>
         </div>
       </section>
 
@@ -520,9 +570,8 @@ export default function Home() {
         </h2>
 
         {/* Container Défilant Horizontal pour les Passions */}
-                {/* Container Défilant Horizontal pour les Passions */}
-        <div className="group flex overflow-hidden w-full pb-12">
-          <div className="flex shrink-0 animate-marquee-fast pr-6 gap-6 items-stretch">
+        <div className="w-full pb-12">
+          <AutoScroll speed={1.5} gapClass="pr-6 gap-6">
             {passionsList.map((passion, index) => (
               <div key={index} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
                 <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
@@ -535,21 +584,7 @@ export default function Home() {
                 </h3>
               </div>
             ))}
-          </div>
-          <div className="flex shrink-0 animate-marquee-fast pr-6 gap-6 items-stretch" aria-hidden="true">
-            {passionsList.map((passion, index) => (
-              <div key={`dup-${index}`} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
-                <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    {passion.icon}
-                  </svg>
-                </div>
-                <h3 className="text-white font-medium tracking-widest uppercase text-sm leading-tight">
-                  {passion.name}
-                </h3>
-              </div>
-            ))}
-          </div>
+          </AutoScroll>
         </div>
       </section>
 

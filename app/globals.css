@@ -37,8 +37,3 @@ body {
 .animate-marquee-slow {
   animation: marquee 50s linear infinite;
 }
-
-.group:hover .animate-marquee-fast,
-.group:hover .animate-marquee-slow {
-  animation-play-state: paused;
-}

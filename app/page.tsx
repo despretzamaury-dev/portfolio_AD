@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from "react";
 const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children: React.ReactNode; speed?: number, gapClass?: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const initialized = useRef(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -17,6 +18,7 @@ const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children
 
     const stopInteracting = () => {
         clearTimeout(interactionTimeout);
+        // Resume scrolling shortly after dropping interaction
         interactionTimeout = setTimeout(() => { isInteracting = false; }, 300);
     };
 
@@ -30,15 +32,32 @@ const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children
     container.addEventListener('wheel', handleInteract, {passive: true});
     container.addEventListener('mousedown', handleInteract, {passive: true});
 
+    // We have 4 sets of children, so singleSetWidth is total width / 4.
+    // We want to start at the beginning of set 2, so we have buffer on both sides.
+    const resizeObserver = new ResizeObserver(() => {
+        if (!initialized.current && content.scrollWidth > 0) {
+            const singleSetWidth = content.scrollWidth / 4;
+            container.scrollLeft = singleSetWidth;
+            initialized.current = true;
+        }
+    });
+    resizeObserver.observe(content);
+
     const scroll = () => {
-      if (!isInteracting && container && content) {
-        container.scrollLeft += speed;
-        // Check wrap-around
-        const halfWidth = content.scrollWidth / 2;
-        if (container.scrollLeft >= halfWidth) {
-          container.scrollLeft -= halfWidth;
-        } else if (container.scrollLeft <= 0 && speed < 0) {
-          container.scrollLeft += halfWidth;
+      const singleSetWidth = content.scrollWidth / 4;
+      if (singleSetWidth > 0) {
+        // Auto-scroll logic (only when not interacting)
+        if (!isInteracting) {
+          container.scrollLeft += speed;
+        }
+        
+        // Wrap-around logic MUST run unconditionally!
+        if (container.scrollLeft >= singleSetWidth * 2) {
+          // If we reach end of set 2, jump back to start of set 2
+          container.scrollLeft -= singleSetWidth;
+        } else if (container.scrollLeft <= singleSetWidth * 0.5) {
+          // If user manually reversed to middle of set 1, jump forward
+          container.scrollLeft += singleSetWidth;
         }
       }
       animationFrameId = requestAnimationFrame(scroll);
@@ -48,6 +67,7 @@ const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children
     return () => {
       cancelAnimationFrame(animationFrameId);
       clearTimeout(interactionTimeout);
+      resizeObserver.disconnect();
       container.removeEventListener('touchstart', handleInteract);
       container.removeEventListener('touchmove', handleInteract);
       container.removeEventListener('wheel', handleInteract);
@@ -58,10 +78,12 @@ const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children
   return (
     <div 
       ref={containerRef}
-      className="flex overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden w-full items-stretch"
+      className={`flex overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden w-full items-stretch`}
       style={{ WebkitOverflowScrolling: "touch" }}
     >
       <div ref={contentRef} className={`flex shrink-0 w-max items-stretch ${gapClass}`}>
+        {children}
+        {children}
         {children}
         {children}
       </div>

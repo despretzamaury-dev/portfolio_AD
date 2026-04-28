@@ -1,6 +1,71 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+const Lightbox = ({ gallery, onClose }: { gallery: { images: string[], index: number } | null, onClose: () => void }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (gallery && scrollRef.current) {
+      setTimeout(() => {
+        if (scrollRef.current) {
+           scrollRef.current.scrollLeft = window.innerWidth * gallery.index;
+        }
+      }, 10);
+    }
+  }, [gallery]);
+
+  useEffect(() => {
+    if (gallery) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
+    return () => { document.body.style.overflow = ''; };
+  }, [gallery]);
+
+  if (!gallery) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex flex-col transition-all duration-300">
+      <button 
+        onClick={onClose}
+        className="absolute top-6 right-6 md:top-10 md:right-10 z-[110] text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div 
+        ref={scrollRef}
+        className="flex-1 flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
+      >
+        {gallery.images.map((src, idx) => (
+          <div 
+            key={idx} 
+            className="w-screen flex-shrink-0 snap-center flex justify-center items-center p-4 md:p-12 relative"
+            onClick={(e) => {
+               if (e.target === e.currentTarget) onClose();
+            }}
+          >
+            <div className="relative w-full md:w-[70vw] h-[60vh] md:h-[80vh]">
+              <Image 
+                src={src} 
+                alt={`Slide ${idx + 1}`} 
+                fill 
+                className="object-contain" 
+              />
+            </div>
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full text-white/80 text-sm tracking-widest font-light pointer-events-none">
+               {idx + 1} / {gallery.images.length}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children: React.ReactNode; speed?: number, gapClass?: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -92,7 +157,7 @@ const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children
 };
 
 
-const ProjectsTrack = () => (
+const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], index: number) => void }) => (
   <>
     {/* LVMH Project */}
           <div className="snap-center shrink-0 w-[90vw] md:w-[80vw] lg:w-[70vw] bg-white/80 backdrop-blur-sm rounded-3xl shadow-sm border border-white/50 overflow-hidden transform transition-all hover:shadow-xl duration-500 flex flex-col">
@@ -182,14 +247,15 @@ const ProjectsTrack = () => (
               <div className="mt-16 pt-10 border-t border-gray-200/60">
                 <p className="text-xs md:text-sm text-[#888] uppercase tracking-[0.2em] mb-6 font-medium text-center">Extraits de la présentation</p>
                 <div className="flex gap-6 overflow-x-auto pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x">
-                  {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                  {[1, 2, 3, 4, 5, 6, 7].map((num, i) => (
                     <Image 
+                      onClick={() => onOpenGallery([...Array(7)].map((_, j) => `/ign/${j+1}.png`), i)}
                       key={`lvmh-${num}`}
                       src={`/ign/${num}.png`} 
                       alt={`Slide LVMH ${num}`} 
                       width={800} 
                       height={450} 
-                      className="rounded-xl object-cover shrink-0 shadow-md snap-center border border-gray-200/50 w-[85%] md:w-[60%] lg:w-[45%]" 
+                      className="rounded-xl object-cover shrink-0 shadow-md snap-center border border-gray-200/50 w-[85%] md:w-[60%] lg:w-[45%] cursor-pointer hover:opacity-80 transition-opacity" 
                     />
                   ))}
                 </div>
@@ -283,14 +349,15 @@ const ProjectsTrack = () => (
               <div className="mt-16 pt-10 border-t border-[#3b5949]">
                 <p className="text-xs md:text-sm text-[#A5BAAC] uppercase tracking-[0.2em] mb-6 font-medium text-center">Extraits de la présentation</p>
                 <div className="flex gap-6 overflow-x-auto pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x">
-                  {Array.from({length: 18}, (_, i) => i + 1).map((num) => (
+                  {Array.from({length: 18}, (_, j) => j + 1).map((num, i) => (
                     <Image 
+                      onClick={() => onOpenGallery(Array.from({length: 18}, (_, k) => `/FairWay/${k+1}.jpg`), i)}
                       key={`fairway-${num}`}
                       src={`/FairWay/${num}.jpg`} 
                       alt={`Slide FairWay ${num}`} 
                       width={800} 
                       height={450} 
-                      className="rounded-xl object-cover shrink-0 shadow-[0_10px_30px_rgba(0,0,0,0.4)] snap-center border border-[#3b5949] w-[85%] md:w-[60%] lg:w-[45%]" 
+                      className="rounded-xl object-cover shrink-0 shadow-[0_10px_30px_rgba(0,0,0,0.4)] snap-center border border-[#3b5949] w-[85%] md:w-[60%] lg:w-[45%] cursor-pointer hover:opacity-80 transition-opacity" 
                     />
                   ))}
                 </div>
@@ -414,14 +481,15 @@ const ProjectsTrack = () => (
               <div className="mt-16 pt-10 border-t border-[#333]">
                 <p className="text-xs md:text-sm text-[#666] uppercase tracking-[0.2em] mb-6 font-medium text-center">Extraits de la présentation</p>
                 <div className="flex gap-6 overflow-x-auto pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x">
-                  {[1, 2, 3, 4, 5, 6].map((num) => (
+                  {[1, 2, 3, 4, 5, 6].map((num, i) => (
                     <Image 
+                      onClick={() => onOpenGallery([...Array(6)].map((_, j) => `/UniSphere/${j+1}.jpg`), i)}
                       key={`unisphere-${num}`}
                       src={`/UniSphere/${num}.jpg`} 
                       alt={`Slide UniSphere ${num}`} 
                       width={800} 
                       height={450} 
-                      className="rounded-xl object-cover shrink-0 shadow-[0_10px_30px_rgba(0,0,0,0.5)] snap-center border border-[#333] w-[85%] md:w-[60%] lg:w-[45%]" 
+                      className="rounded-xl object-cover shrink-0 shadow-[0_10px_30px_rgba(0,0,0,0.5)] snap-center border border-[#333] w-[85%] md:w-[60%] lg:w-[45%] cursor-pointer hover:opacity-80 transition-opacity" 
                     />
                   ))}
                 </div>
@@ -505,8 +573,11 @@ const passionsList = [
 
 
 export default function Home() {
+  const [gallery, setGallery] = useState<{images: string[], index: number} | null>(null);
+
   return (
     <main className="font-sans bg-black text-white relative">
+      <Lightbox gallery={gallery} onClose={() => setGallery(null)} />
       {/* Background Image Globale */}
       <div className="fixed inset-0 z-0">
         <Image
@@ -555,7 +626,7 @@ export default function Home() {
         */}
         <div className="w-full pb-16">
           <AutoScroll speed={1} gapClass="pr-8 gap-8">
-            <ProjectsTrack />
+            <ProjectsTrack onOpenGallery={(images, idx) => setGallery({images, index: idx})} />
           </AutoScroll>
         </div>
       </section>

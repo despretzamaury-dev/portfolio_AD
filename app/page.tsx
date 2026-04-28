@@ -67,6 +67,42 @@ const Lightbox = ({ gallery, onClose }: { gallery: { images: string[], index: nu
   );
 };
 
+const Typewriter = ({ text, speed = 100, delay = 500 }: { text: string; speed?: number; delay?: number }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [started, setStarted] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setStarted(true), delay);
+    return () => clearTimeout(timeout);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!started) return;
+    let index = 0;
+    const interval = setInterval(() => {
+      setDisplayedText(text.slice(0, index + 1));
+      index++;
+      if (index >= text.length) {
+        clearInterval(interval);
+        setTimeout(() => setIsComplete(true), 1200);
+      }
+    }, speed);
+    return () => clearInterval(interval);
+  }, [text, speed, started]);
+
+  return (
+    <span className="relative inline-block text-left">
+      {/* Invisible text forces exact width from the start, preserving centering */}
+      <span className="invisible pointer-events-none">{text}</span>
+      <span className="absolute top-0 left-0 whitespace-nowrap">
+        {displayedText}
+        <span className={`ml-[0.15em] inline-block w-[0.05em] h-[0.9em] bg-white align-middle -translate-y-[0.15em] transition-opacity duration-1000 ${isComplete ? 'opacity-0' : 'animate-pulse opacity-100'}`}></span>
+      </span>
+    </span>
+  );
+};
+
 const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children: React.ReactNode; speed?: number, gapClass?: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -596,7 +632,7 @@ export default function Home() {
         {/* Content */}
         <div className="flex flex-col items-center gap-3 text-center text-white p-4">
           <h1 className="text-5xl font-bold tracking-widest uppercase md:text-7xl drop-shadow-xl sm:text-6xl">
-            AMAURY DESPRETZ
+            <Typewriter text="AMAURY DESPRETZ" speed={120} delay={600} />
           </h1>
           <h2 className="text-xl md:text-2xl font-light tracking-[0.2em] drop-shadow-lg text-white uppercase mt-2">
             Étudiant à Eugenia School

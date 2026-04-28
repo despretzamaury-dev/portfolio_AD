@@ -1,57 +1,9 @@
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <main className="font-sans bg-black text-white relative">
-      {/* Background Image Globale */}
-      <div className="fixed inset-0 z-0">
-        <Image
-          src="/background.JPG"
-          alt="Amaury Despretz Background"
-          fill
-          className="object-cover object-center"
-          priority
-        />
-        {/* Overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-black/50"></div>
-      </div>
 
-      {/* HERO SECTION */}
-      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden">
-        {/* Content */}
-        <div className="flex flex-col items-center gap-3 text-center text-white p-4">
-          <h1 className="text-5xl font-bold tracking-widest uppercase md:text-7xl drop-shadow-xl sm:text-6xl">
-            AMAURY DESPRETZ
-          </h1>
-          <h2 className="text-xl md:text-2xl font-light tracking-[0.2em] drop-shadow-lg text-white uppercase mt-2">
-            Étudiant à Eugenia School
-          </h2>
-          <p className="text-sm md:text-base font-light tracking-[0.4em] drop-shadow-lg text-gray-300 uppercase mt-1">
-            Portfolio
-          </p>
-        </div>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 animate-bounce text-white/70">
-           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-           </svg>
-        </div>
-      </section>
-
-      {/* PROJECTS SECTION */}
-      <section className="relative z-10 min-h-screen pt-24 pb-12 overflow-hidden flex flex-col">
-        <h2 className="text-4xl md:text-5xl font-light tracking-[0.2em] uppercase mb-12 text-center text-white drop-shadow-md px-6">
-          Mes Projets
-        </h2>
-
-        {/* 
-          Container Défilant Horizontal 
-          snap-x et snap-mandatory forcent l'alignement de chaque carte.
-        */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-8 px-6 md:px-16 lg:px-32 pb-16 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden w-full flex-1 items-stretch">
-          
-          {/* LVMH Project */}
+const ProjectsTrack = () => (
+  <>
+    {/* LVMH Project */}
           <div className="snap-center shrink-0 w-[90vw] md:w-[80vw] lg:w-[70vw] bg-white/80 backdrop-blur-sm rounded-3xl shadow-sm border border-white/50 overflow-hidden transform transition-all hover:shadow-xl duration-500 flex flex-col">
             <div className="p-8 md:p-14">
               
@@ -386,20 +338,11 @@ export default function Home() {
 
             </div>
           </div>
-          
-        </div>
-      </section>
+  </>
+);
 
-      {/* COMPÉTENCES SECTION */}
-      <section className="relative z-10 pt-12 pb-24 overflow-hidden flex flex-col">
-        <h2 className="text-3xl md:text-5xl font-light tracking-[0.2em] uppercase mb-12 text-center text-white drop-shadow-md px-6">
-          Mes Compétences
-        </h2>
 
-        {/* Container Défilant Horizontal pour les compétences */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 px-6 md:px-16 lg:px-32 pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden w-full items-stretch">
-          
-          {[
+const skillsList = [
             {
               name: "Agent IA Dust",
               icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
@@ -448,32 +391,9 @@ export default function Home() {
               name: "Driving Licence (Permis B)",
               icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h8a2 2 0 012 2v2H6V9a2 2 0 012-2zm-4 6h16a1 1 0 011 1v3a2 2 0 01-2 2H5a2 2 0 01-2-2v-3a1 1 0 011-1zm3 2a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
             }
-          ].map((skill, index) => (
-            <div key={index} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
-              <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {skill.icon}
-                </svg>
-              </div>
-              <h3 className="text-white font-medium tracking-widest uppercase text-[11px] md:text-sm leading-tight">
-                {skill.name}
-              </h3>
-            </div>
-          ))}
-          
-        </div>
-      </section>
+          ];
 
-      {/* PASSIONS SECTION */}
-      <section className="relative z-10 pt-4 pb-24 overflow-hidden flex flex-col">
-        <h2 className="text-3xl md:text-5xl font-light tracking-[0.2em] uppercase mb-12 text-center text-white drop-shadow-md px-6">
-          Mes Passions
-        </h2>
-
-        {/* Container Défilant Horizontal pour les Passions */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 px-6 md:px-16 lg:px-32 pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden w-full items-stretch">
-          
-          {[
+const passionsList = [
             {
               name: "Voyage",
               icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -490,26 +410,153 @@ export default function Home() {
               name: "Cinéma",
               icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
             }
-          ].map((passion, index) => (
-            <div key={index} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
-              <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {passion.icon}
-                </svg>
+          ];
+
+
+export default function Home() {
+  return (
+    <main className="font-sans bg-black text-white relative">
+      {/* Background Image Globale */}
+      <div className="fixed inset-0 z-0">
+        <Image
+          src="/background.JPG"
+          alt="Amaury Despretz Background"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+        {/* Overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-black/50"></div>
+      </div>
+
+      {/* HERO SECTION */}
+      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden">
+        {/* Content */}
+        <div className="flex flex-col items-center gap-3 text-center text-white p-4">
+          <h1 className="text-5xl font-bold tracking-widest uppercase md:text-7xl drop-shadow-xl sm:text-6xl">
+            AMAURY DESPRETZ
+          </h1>
+          <h2 className="text-xl md:text-2xl font-light tracking-[0.2em] drop-shadow-lg text-white uppercase mt-2">
+            Étudiant à Eugenia School
+          </h2>
+          <p className="text-sm md:text-base font-light tracking-[0.4em] drop-shadow-lg text-gray-300 uppercase mt-1">
+            Portfolio
+          </p>
+        </div>
+        
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 animate-bounce text-white/70">
+           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+           </svg>
+        </div>
+      </section>
+
+      {/* PROJECTS SECTION */}
+      <section className="relative z-10 min-h-screen pt-24 pb-12 overflow-hidden flex flex-col">
+        <h2 className="text-4xl md:text-5xl font-light tracking-[0.2em] uppercase mb-12 text-center text-white drop-shadow-md px-6">
+          Mes Projets
+        </h2>
+
+        {/* 
+          Container Défilant Horizontal 
+          snap-x et snap-mandatory forcent l'alignement de chaque carte.
+        */}
+                {/* Container Défilant Horizontal */}
+        <div className="group flex overflow-hidden w-full pb-16">
+          <div className="flex shrink-0 animate-marquee-slow pr-8 gap-8 items-stretch">
+            <ProjectsTrack />
+          </div>
+          <div className="flex shrink-0 animate-marquee-slow pr-8 gap-8 items-stretch" aria-hidden="true">
+            <ProjectsTrack />
+          </div>
+        </div>
+      </section>
+
+      {/* COMPÉTENCES SECTION */}
+      <section className="relative z-10 pt-12 pb-24 overflow-hidden flex flex-col">
+        <h2 className="text-3xl md:text-5xl font-light tracking-[0.2em] uppercase mb-12 text-center text-white drop-shadow-md px-6">
+          Mes Compétences
+        </h2>
+
+        {/* Container Défilant Horizontal pour les compétences */}
+                {/* Container Défilant Horizontal pour les compétences */}
+        <div className="group flex overflow-hidden w-full pb-12">
+          <div className="flex shrink-0 animate-marquee-fast pr-6 gap-6 items-stretch">
+            {skillsList.map((skill, index) => (
+              <div key={index} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
+                <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {skill.icon}
+                  </svg>
+                </div>
+                <h3 className="text-white font-medium tracking-widest uppercase text-[11px] md:text-sm leading-tight">
+                  {skill.name}
+                </h3>
               </div>
-              <h3 className="text-white font-medium tracking-widest uppercase text-sm leading-tight">
-                {passion.name}
-              </h3>
-            </div>
-          ))}
-          
+            ))}
+          </div>
+          <div className="flex shrink-0 animate-marquee-fast pr-6 gap-6 items-stretch" aria-hidden="true">
+            {skillsList.map((skill, index) => (
+              <div key={`dup-${index}`} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
+                <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {skill.icon}
+                  </svg>
+                </div>
+                <h3 className="text-white font-medium tracking-widest uppercase text-[11px] md:text-sm leading-tight">
+                  {skill.name}
+                </h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PASSIONS SECTION */}
+      <section className="relative z-10 pt-4 pb-24 overflow-hidden flex flex-col">
+        <h2 className="text-3xl md:text-5xl font-light tracking-[0.2em] uppercase mb-12 text-center text-white drop-shadow-md px-6">
+          Mes Passions
+        </h2>
+
+        {/* Container Défilant Horizontal pour les Passions */}
+                {/* Container Défilant Horizontal pour les Passions */}
+        <div className="group flex overflow-hidden w-full pb-12">
+          <div className="flex shrink-0 animate-marquee-fast pr-6 gap-6 items-stretch">
+            {passionsList.map((passion, index) => (
+              <div key={index} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
+                <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {passion.icon}
+                  </svg>
+                </div>
+                <h3 className="text-white font-medium tracking-widest uppercase text-sm leading-tight">
+                  {passion.name}
+                </h3>
+              </div>
+            ))}
+          </div>
+          <div className="flex shrink-0 animate-marquee-fast pr-6 gap-6 items-stretch" aria-hidden="true">
+            {passionsList.map((passion, index) => (
+              <div key={`dup-${index}`} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
+                <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {passion.icon}
+                  </svg>
+                </div>
+                <h3 className="text-white font-medium tracking-widest uppercase text-sm leading-tight">
+                  {passion.name}
+                </h3>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CONTACT SECTION */}
       <section className="relative z-10 w-full bg-black/80 backdrop-blur-lg border-t border-white/10 py-24 flex flex-col items-center justify-center">
         <h2 className="text-3xl md:text-5xl font-light tracking-[0.2em] uppercase mb-16 text-center text-white drop-shadow-md px-6">
-          Me Contacter
+          Let's work together !
         </h2>
         
         <div className="flex flex-col items-center gap-8 text-center">
@@ -517,8 +564,8 @@ export default function Home() {
             <a href="mailto:despretzamaury@gmail.com" className="text-gray-200 hover:text-white transition-colors duration-300">
               despretzamaury@gmail.com
             </a>
-            <a href="tel:+33781400086" className="text-gray-200 hover:text-white transition-colors duration-300">
-              07 81 40 00 86
+            <a href="mailto:adespretz@eugeniaschool.com" className="text-gray-200 hover:text-white transition-colors duration-300">
+              adespretz@eugeniaschool.com
             </a>
           </div>
 

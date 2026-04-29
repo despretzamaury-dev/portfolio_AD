@@ -195,6 +195,102 @@ const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children
 
 const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], index: number) => void }) => (
   <>
+    {/* Licter x Decathlon Project */}
+    <div className="snap-center shrink-0 w-[90vw] md:w-[80vw] lg:w-[70vw] bg-[#0A1A2A] rounded-3xl shadow-lg border border-[#16304A] overflow-hidden transform transition-all hover:shadow-2xl duration-500 flex flex-col">
+      <div className="p-8 md:p-14 text-[#E0E8F0]">
+        
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-[#16304A] pb-8">
+          <div>
+            <h3 className="text-3xl md:text-5xl font-bold tracking-tight text-white flex items-baseline">
+              Licter x <span className="text-[#0082C3] ml-2">Decathlon</span>
+            </h3>
+            <p className="text-[#8AB4F8] mt-3 uppercase tracking-[0.15em] text-sm md:text-base font-medium">
+              Social Data Analyse
+            </p>
+          </div>
+          <div className="px-5 py-2.5 bg-[#0082C3]/10 border border-[#0082C3]/30 text-[#0082C3] font-bold text-xs md:text-sm uppercase tracking-widest rounded-full self-start md:self-end">
+            Projet Professionnel
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
+          {/* Contexte */}
+          <div className="space-y-5">
+            <h4 className="text-lg md:text-xl tracking-[0.1em] uppercase text-white font-medium flex items-center gap-3">
+              <span className="text-sm font-bold text-[#0082C3]">01</span>
+              Le Contexte
+            </h4>
+            <p className="text-[#A0B0C0] font-light leading-relaxed">
+              Mission de <strong>Social Data Analyse</strong> pour analyser l&apos;image de marque et les retours clients de Decathlon sur les réseaux sociaux.
+            </p>
+            <ul className="space-y-3 text-[#A0B0C0] font-light list-none">
+              <li className="flex items-start gap-3"><span className="text-[#0082C3] mt-1">✦</span> <span>Comprendre les attentes des consommateurs.</span></li>
+              <li className="flex items-start gap-3"><span className="text-[#0082C3] mt-1">✦</span> <span>Identifier les axes d&apos;amélioration clés.</span></li>
+            </ul>
+          </div>
+
+          {/* Collecte */}
+          <div className="space-y-5">
+            <h4 className="text-lg md:text-xl tracking-[0.1em] uppercase text-white font-medium flex items-center gap-3">
+              <span className="text-sm font-bold text-[#0082C3]">02</span>
+              Collecte de Données
+            </h4>
+            <p className="text-[#A0B0C0] font-light leading-relaxed">
+              Extraction et structuration des données sociales pour construire une base de données robuste :
+            </p>
+            <ul className="space-y-2 text-[#A0B0C0] font-light list-disc pl-5">
+              <li>Scraping de mentions et commentaires ciblés.</li>
+              <li>Nettoyage des données (Data Cleaning) pour retirer le bruit.</li>
+              <li>Structuration des informations clés.</li>
+            </ul>
+          </div>
+
+          {/* Analyse */}
+          <div className="space-y-5">
+            <h4 className="text-lg md:text-xl tracking-[0.1em] uppercase text-white font-medium flex items-center gap-3">
+              <span className="text-sm font-bold text-[#0082C3]">03</span>
+              Analyse des Sentiments
+            </h4>
+            <div className="bg-[#0B2035] rounded-2xl p-5 border border-[#16304A]">
+              <p className="text-[#A0B0C0] font-light leading-relaxed">
+                Évaluation des tendances et de la satisfaction client grâce à l&apos;analyse de sentiment. Identification des <strong className="text-white">&quot;bad buzzes&quot;</strong> potentiels et suivi de l&apos;e-réputation.
+              </p>
+            </div>
+          </div>
+
+          {/* Dashboarding */}
+          <div className="space-y-5">
+            <h4 className="text-lg md:text-xl tracking-[0.1em] uppercase text-white font-medium flex items-center gap-3">
+              <span className="text-sm font-bold text-[#0082C3]">04</span>
+              Dashboarding
+            </h4>
+            <p className="text-[#A0B0C0] font-light leading-relaxed">
+              Création d&apos;un outil de visualisation interactif pour le suivi de la réputation, permettant de piloter facilement les indicateurs et prendre des décisions stratégiques.
+            </p>
+          </div>
+        </div>
+
+        {/* Galerie Licter */}
+        <div className="mt-16 pt-10 border-t border-[#16304A]">
+          <p className="text-xs md:text-sm text-[#8AB4F8] uppercase tracking-[0.2em] mb-6 font-medium text-center">Extraits de la présentation</p>
+          <div className="flex gap-6 overflow-x-auto pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x">
+            {[1, 2, 3, 4, 5, 6, 7].map((num, i) => (
+              <Image 
+                onClick={() => onOpenGallery([...Array(7)].map((_, j) => `/BDD%20Licter%20X%20Decathlon/${j+1}.jpg`), i)}
+                key={`decathlon-${num}`}
+                src={`/BDD%20Licter%20X%20Decathlon/${num}.jpg`} 
+                alt={`Slide Decathlon ${num}`} 
+                width={800} 
+                height={450} 
+                className="rounded-xl object-cover shrink-0 shadow-[0_10px_30px_rgba(0,0,0,0.5)] snap-center border border-[#16304A] w-[85%] md:w-[60%] lg:w-[45%] cursor-pointer hover:opacity-80 transition-opacity" 
+              />
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     {/* LVMH Project */}
           <div className="snap-center shrink-0 w-[90vw] md:w-[80vw] lg:w-[70vw] bg-white/80 backdrop-blur-sm rounded-3xl shadow-sm border border-white/50 overflow-hidden transform transition-all hover:shadow-xl duration-500 flex flex-col">
             <div className="p-8 md:p-14">

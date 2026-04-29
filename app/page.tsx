@@ -704,12 +704,92 @@ const passionsList = [
           ];
 
 
+const AppointmentModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-300" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="bg-[#0A0A0A] border border-white/10 p-8 md:p-10 rounded-3xl w-full max-w-lg relative shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 text-white/50 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition-all"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+
+        {submitted ? (
+          <div className="text-center py-12">
+            <div className="w-20 h-20 bg-[#0082C3]/20 rounded-full flex items-center justify-center mx-auto mb-6 text-[#0082C3] shadow-[0_0_20px_rgba(0,130,195,0.3)]">
+              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-light tracking-wider text-white mb-3">Demande envoyée</h3>
+            <p className="text-gray-400 font-light text-sm md:text-base px-4">Je vous recontacterai très vite pour confirmer notre rendez-vous.</p>
+            <button onClick={onClose} className="mt-10 px-10 py-3.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all text-sm uppercase tracking-widest font-medium">
+              Fermer
+            </button>
+          </div>
+        ) : (
+          <>
+            <h3 className="text-2xl md:text-3xl font-light tracking-[0.1em] text-white mb-2 uppercase">
+              Prendre <span className="text-[#0082C3] font-normal">RDV</span>
+            </h3>
+            <p className="text-gray-400 font-light text-sm mb-8">Remplissez ce formulaire pour planifier un appel.</p>
+            
+            <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-6">
+              <div className="grid grid-cols-2 gap-5">
+                <div className="space-y-2">
+                  <label className="text-[10px] md:text-xs uppercase tracking-widest text-gray-400 font-medium ml-1">Prénom</label>
+                  <input required type="text" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-sm focus:outline-none focus:border-[#0082C3]/50 focus:bg-white/10 transition-all placeholder:text-gray-600" placeholder="John" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] md:text-xs uppercase tracking-widest text-gray-400 font-medium ml-1">Nom</label>
+                  <input required type="text" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-sm focus:outline-none focus:border-[#0082C3]/50 focus:bg-white/10 transition-all placeholder:text-gray-600" placeholder="Doe" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] md:text-xs uppercase tracking-widest text-gray-400 font-medium ml-1">Job / Entreprise</label>
+                <input required type="text" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-sm focus:outline-none focus:border-[#0082C3]/50 focus:bg-white/10 transition-all placeholder:text-gray-600" placeholder="CEO chez..." />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] md:text-xs uppercase tracking-widest text-gray-400 font-medium ml-1">Email</label>
+                <input required type="email" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-sm focus:outline-none focus:border-[#0082C3]/50 focus:bg-white/10 transition-all placeholder:text-gray-600" placeholder="john.doe@email.com" />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] md:text-xs uppercase tracking-widest text-gray-400 font-medium ml-1">Créneau souhaité</label>
+                <input required type="datetime-local" className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white text-sm focus:outline-none focus:border-[#0082C3]/50 focus:bg-white/10 transition-all [color-scheme:dark]" />
+              </div>
+
+              <button type="submit" className="w-full mt-8 px-8 py-4 bg-[#0082C3] hover:bg-[#006090] text-white rounded-2xl transition-all font-bold tracking-widest uppercase text-sm flex justify-center shadow-[0_10px_20px_rgba(0,130,195,0.2)] hover:shadow-[0_10px_30px_rgba(0,130,195,0.4)] hover:-translate-y-1">
+                Confirmer le call
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+
 export default function Home() {
   const [gallery, setGallery] = useState<{images: string[], index: number} | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   return (
     <main className="font-sans bg-black text-white relative">
       <Lightbox gallery={gallery} onClose={() => setGallery(null)} />
+      <AppointmentModal isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
       {/* Background Image Globale */}
       <div className="fixed inset-0 z-0">
         <Image
@@ -736,6 +816,15 @@ export default function Home() {
           <p className="text-sm md:text-base font-light tracking-[0.4em] drop-shadow-lg text-gray-300 uppercase mt-1">
             Portfolio
           </p>
+
+          {/* Bouton Prendre RDV (Transparent) */}
+          <button 
+            onClick={() => setIsFormOpen(true)}
+            className="mt-8 px-8 py-3 bg-transparent border border-white/50 hover:bg-white hover:text-black transform text-white rounded-full transition-all duration-300 font-medium tracking-widest uppercase text-xs md:text-sm flex items-center gap-3 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+          >
+            <span>Prendre RDV</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+          </button>
         </div>
         
         {/* Scroll Indicator */}
@@ -816,11 +905,20 @@ export default function Home() {
       {/* CONTACT SECTION */}
       <section className="relative z-10 w-full bg-black/80 backdrop-blur-lg border-t border-white/10 py-24 flex flex-col items-center justify-center">
         <h2 className="text-3xl md:text-5xl font-light tracking-[0.2em] uppercase mb-16 text-center text-white drop-shadow-md px-6">
-          Let's work together !
+          Let&apos;s work together !
         </h2>
         
-        <div className="flex flex-col items-center gap-8 text-center">
-          <div className="flex flex-col gap-4 text-xl md:text-2xl font-light tracking-widest">
+        <div className="flex flex-col items-center gap-10 text-center">
+          {/* Bouton Prendre RDV */}
+          <button 
+            onClick={() => setIsFormOpen(true)}
+            className="px-10 py-4 md:px-12 md:py-5 bg-[#0082C3] hover:bg-[#006090] hover:-translate-y-1 transform text-white rounded-full transition-all font-bold tracking-widest uppercase text-sm md:text-base shadow-[0_10px_30px_rgba(0,130,195,0.3)] hover:shadow-[0_15px_40px_rgba(0,130,195,0.5)] flex items-center gap-3"
+          >
+            <span>Prendre RDV</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+          </button>
+
+          <div className="flex flex-col gap-4 text-xl md:text-2xl font-light tracking-widest mt-2">
             <a href="mailto:despretzamaury@gmail.com" className="text-gray-200 hover:text-white transition-colors duration-300">
               despretzamaury@gmail.com
             </a>

@@ -193,10 +193,11 @@ const AutoScroll = ({ children, speed = 1, gapClass = "pr-8 gap-8" }: { children
 };
 
 
-const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], index: number) => void }) => (
+const ProjectsTrack = ({ onOpenGallery, activeProject }: { onOpenGallery: (images: string[], index: number) => void, activeProject?: number }) => (
   <>
     {/* Licter x Decathlon Project */}
-    <div className="snap-center shrink-0 w-[90vw] md:w-[80vw] lg:w-[70vw] bg-[#0A1A2A] rounded-3xl shadow-lg border border-[#16304A] overflow-hidden transform transition-all hover:shadow-2xl duration-500 flex flex-col">
+    {(activeProject === undefined || activeProject === 0) && (
+    <div className="w-full bg-[#0A1A2A] rounded-3xl shadow-lg border border-[#16304A] overflow-hidden transform transition-all hover:shadow-2xl duration-500 flex flex-col">
       <div className="p-8 md:p-14 text-[#E0E8F0]">
         
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-[#16304A] pb-8">
@@ -274,9 +275,9 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
         <div className="mt-16 pt-10 border-t border-[#16304A]">
           <p className="text-xs md:text-sm text-[#8AB4F8] uppercase tracking-[0.2em] mb-6 font-medium text-center">Extraits de la présentation</p>
           <div className="flex gap-6 overflow-x-auto pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x">
-            {[1, 2, 3, 4, 5, 6, 7].map((num, i) => (
+            {[1, 2, 3, 4, 5, 7].map((num, i) => (
               <Image 
-                onClick={() => onOpenGallery([...Array(7)].map((_, j) => `/BDD%20Licter%20X%20Decathlon/${j+1}.jpg`), i)}
+                onClick={() => onOpenGallery([1, 2, 3, 4, 5, 7].map((n) => `/BDD%20Licter%20X%20Decathlon/${n}.jpg`), i)}
                 key={`decathlon-${num}`}
                 src={`/BDD%20Licter%20X%20Decathlon/${num}.jpg`} 
                 alt={`Slide Decathlon ${num}`} 
@@ -291,8 +292,11 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
       </div>
     </div>
 
+        )}
+
     {/* LVMH Project */}
-          <div className="snap-center shrink-0 w-[90vw] md:w-[80vw] lg:w-[70vw] bg-white/80 backdrop-blur-sm rounded-3xl shadow-sm border border-white/50 overflow-hidden transform transition-all hover:shadow-xl duration-500 flex flex-col">
+    {(activeProject === undefined || activeProject === 1) && (
+          <div className="w-full bg-white/80 backdrop-blur-sm rounded-3xl shadow-sm border border-white/50 overflow-hidden transform transition-all hover:shadow-xl duration-500 flex flex-col">
             <div className="p-8 md:p-14">
               
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-gray-200/60 pb-8">
@@ -331,7 +335,7 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
                     Taxonomie Seller
                   </h4>
                   <p className="text-[#666] font-light leading-relaxed">
-                    Création d'un Dashboard axé sur la <strong>Maison Fendi</strong>, structurant la donnée autour des insights clients :
+                    Création d&apos;un Dashboard axé sur la <strong>Maison Fendi</strong>, structurant la donnée autour des insights clients :
                   </p>
                   <ul className="space-y-2 text-[#555] font-light list-disc pl-5">
                     <li><strong>Motivations</strong> : Cadeau Luxe, Look Créatif, Héritage, Usage Quotidien</li>
@@ -350,7 +354,7 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-[#666] font-light leading-relaxed">
                     <div>
                       <strong className="block text-[#444] mb-2 font-normal">RGPD</strong>
-                      Problématiques juridiques et éthiques. Définition des contraintes pour l'IA.
+                      Problématiques juridiques et éthiques. Définition des contraintes pour l&apos;IA.
                     </div>
                     <div>
                       <strong className="block text-[#444] mb-2 font-normal">Nettoyage</strong>
@@ -366,7 +370,7 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
                     Automatisation
                   </h4>
                   <p className="text-[#666] font-light leading-relaxed">
-                    Déploiement d'outils automatisés pour faciliter et optimiser le processus de vente en boutique :
+                    Déploiement d&apos;outils automatisés pour faciliter et optimiser le processus de vente en boutique :
                   </p>
                   <ul className="space-y-2 text-[#555] font-light list-disc pl-5">
                     <li>Recommandation Commerciale Intelligente</li>
@@ -396,8 +400,11 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
             </div>
           </div>
 
-          {/* FairWay Project */}
-          <div className="snap-center shrink-0 w-[90vw] md:w-[80vw] lg:w-[70vw] bg-[#2D4539] rounded-3xl shadow-lg border border-[#3b5949] overflow-hidden transform transition-all hover:shadow-2xl duration-500 flex flex-col">
+              )}
+
+    {/* FairWay Project */}
+    {(activeProject === undefined || activeProject === 2) && (
+          <div className="w-full bg-[#2D4539] rounded-3xl shadow-lg border border-[#3b5949] overflow-hidden transform transition-all hover:shadow-2xl duration-500 flex flex-col">
             <div className="p-8 md:p-14 text-[#E8DCC0]">
               
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-[#3b5949] pb-8">
@@ -425,7 +432,7 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
                     Démocratiser le golf et offrir un accompagnement personnalisé.
                   </p>
                   <ul className="space-y-3 text-[#B9CCBF] font-light list-none">
-                    <li className="flex items-start gap-3"><span className="text-[#EED8A1] mt-1">✦</span> <span><strong>Centralisation</strong> : Toute l'expérience golf dans une seule app.</span></li>
+                    <li className="flex items-start gap-3"><span className="text-[#EED8A1] mt-1">✦</span> <span><strong>Centralisation</strong> : Toute l&apos;expérience golf dans une seule app.</span></li>
                     <li className="flex items-start gap-3"><span className="text-[#EED8A1] mt-1">✦</span> <span><strong>Innovation IA</strong> : Coaching personnalisé et analyse de swing.</span></li>
                     <li className="flex items-start gap-3"><span className="text-[#EED8A1] mt-1">✦</span> <span><strong>Social</strong> : Matching entre joueurs et communautés.</span></li>
                   </ul>
@@ -440,7 +447,7 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
                   <ul className="space-y-3 text-[#B9CCBF] font-light list-none">
                     <li className="flex items-start gap-3"><span className="text-[#EED8A1] mt-1">⛳</span> <span>Partenariat technologique clé avec <strong>Mistral AI</strong> (Solution française).</span></li>
                     <li className="flex items-start gap-3"><span className="text-[#EED8A1] mt-1">⛳</span> <span>Réseau de parcours partenaires via <strong>Bleu Green</strong>.</span></li>
-                    <li className="flex items-start gap-3"><span className="text-[#EED8A1] mt-1">⛳</span> <span>Modèle d'abonnements : <i>Plus</i> (6.99€/mois) & <i>Pro</i> (9.99€/mois).</span></li>
+                    <li className="flex items-start gap-3"><span className="text-[#EED8A1] mt-1">⛳</span> <span>Modèle d&apos;abonnements : <i>Plus</i> (6.99€/mois) & <i>Pro</i> (9.99€/mois).</span></li>
                   </ul>
                 </div>
 
@@ -467,7 +474,7 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
                     Analyse Concurrentielle
                   </h4>
                   <p className="text-[#B9CCBF] font-light leading-relaxed">
-                    Sur un marché très concurrentiel (<i>Hole19, Golfshot, HelloBirdie</i>), notre différenciation s'appuie sur trois piliers :
+                    Sur un marché très concurrentiel (<i>Hole19, Golfshot, HelloBirdie</i>), notre différenciation s&apos;appuie sur trois piliers :
                   </p>
                   <ul className="space-y-2 text-[#B9CCBF] font-light list-disc pl-5">
                     <li>Innovation technologique (Analyse de performance IA)</li>
@@ -498,8 +505,11 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
             </div>
           </div>
 
-          {/* UniSphere Project */}
-          <div className="snap-center shrink-0 w-[90vw] md:w-[80vw] lg:w-[70vw] bg-[#121212] rounded-3xl shadow-lg border border-[#222] overflow-hidden transform transition-all hover:shadow-2xl duration-500 flex flex-col">
+              )}
+
+    {/* UniSphere Project */}
+    {(activeProject === undefined || activeProject === 3) && (
+          <div className="w-full bg-[#121212] rounded-3xl shadow-lg border border-[#222] overflow-hidden transform transition-all hover:shadow-2xl duration-500 flex flex-col">
             <div className="p-8 md:p-14 text-[#E0E0E0]">
               
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-[#333] pb-8">
@@ -524,10 +534,10 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
                     La Vision
                   </h4>
                   <p className="text-[#A0A0A0] font-light leading-relaxed">
-                    <strong>Plus qu'une plateforme.</strong> Un écosystème conçu pour centraliser, mesurer et transformer chaque projet étudiant en succès collectif. 
+                    <strong>Plus qu&apos;une plateforme.</strong> Un écosystème conçu pour centraliser, mesurer et transformer chaque projet étudiant en succès collectif. 
                   </p>
                   <p className="text-[#A0A0A0] font-light leading-relaxed">
-                    Étudiants, BDE, associations, administration et partenaires travaillent ensemble dans un environnement unique pour l'école.
+                    Étudiants, BDE, associations, administration et partenaires travaillent ensemble dans un environnement unique pour l&apos;école.
                   </p>
                 </div>
 
@@ -560,7 +570,7 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
                             <span className="text-white text-[10px] font-bold">82%</span>
                          </div>
                       </div>
-                      <span className="text-sm md:text-base flex-1">Associations en manque de visibilité et d'outils.</span>
+                      <span className="text-sm md:text-base flex-1">Associations en manque de visibilité et d&apos;outils.</span>
                     </li>
                   </ul>
                 </div>
@@ -587,7 +597,7 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
                 <div className="space-y-5">
                   <h4 className="text-lg md:text-xl tracking-[0.1em] uppercase text-white font-medium flex items-center gap-3">
                     <span className="text-sm font-bold text-[#00D084]">04</span>
-                    L'Équipe & Rôle
+                    L&apos;Équipe & Rôle
                   </h4>
                   <p className="text-[#A0A0A0] font-light leading-relaxed mb-4">
                     Projet réalisé en équipe pluridisciplinaire :
@@ -629,6 +639,7 @@ const ProjectsTrack = ({ onOpenGallery }: { onOpenGallery: (images: string[], in
 
             </div>
           </div>
+        )}
   </>
 );
 
@@ -681,6 +692,35 @@ const skillsList = [
               icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h8a2 2 0 012 2v2H6V9a2 2 0 012-2zm-4 6h16a1 1 0 011 1v3a2 2 0 01-2 2H5a2 2 0 01-2-2v-3a1 1 0 011-1zm3 2a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
             }
           ];
+
+
+const projectsList = [
+  { name: "Licter x Decathlon", id: "decathlon" },
+  { name: "LVMH", id: "lvmh" },
+  { name: "FairWay", id: "fairway" },
+  { name: "UniSphere", id: "unisphere" }
+];
+
+const ProjectModal = ({ activeProject, onClose, onOpenGallery }: { activeProject: number | null, onClose: () => void, onOpenGallery: (images: string[], index: number) => void }) => {
+  useEffect(() => {
+    if (activeProject !== null) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
+    return () => { document.body.style.overflow = ''; };
+  }, [activeProject]);
+
+  if (activeProject === null) return null;
+
+  return (
+    <div className="fixed inset-0 z-[80] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8" onClick={(e) => { if(e.target === e.currentTarget) onClose(); }}>
+      <button onClick={onClose} className="absolute top-4 right-4 md:top-6 md:right-6 z-[90] text-white hover:text-red-400 transition-colors bg-white/10 hover:bg-white/20 p-2 md:p-3 rounded-full">
+        <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+      <div className="w-full max-w-6xl max-h-[90vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden relative flex justify-center">
+         <ProjectsTrack onOpenGallery={onOpenGallery} activeProject={activeProject} />
+      </div>
+    </div>
+  );
+};
 
 const passionsList = [
             {
@@ -780,16 +820,20 @@ const AppointmentModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 };
 
 
+
 export default function Home() {
   const [gallery, setGallery] = useState<{images: string[], index: number} | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [activeProject, setActiveProject] = useState<number | null>(null);
 
   return (
-    <main className="font-sans bg-black text-white relative">
+    <main className="font-sans bg-black text-white h-[100dvh] w-screen overflow-hidden relative flex flex-col justify-between">
       <Lightbox gallery={gallery} onClose={() => setGallery(null)} />
       <AppointmentModal isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
+      <ProjectModal activeProject={activeProject} onClose={() => setActiveProject(null)} onOpenGallery={(images, idx) => setGallery({images, index: idx})} />
+      
       {/* Background Image Globale */}
-      <div className="fixed inset-0 z-0">
+      <div className="absolute inset-0 z-0">
         <Image
           src="/background.JPG"
           alt="Amaury Despretz Background"
@@ -797,154 +841,92 @@ export default function Home() {
           className="object-cover object-center"
           priority
         />
-        {/* Overlay to ensure text readability */}
         <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
       {/* HERO SECTION */}
-      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden">
-        {/* Content */}
-        <div className="flex flex-col items-center gap-3 text-center text-white p-4">
-          <h1 className="text-5xl font-bold tracking-widest uppercase md:text-7xl drop-shadow-xl sm:text-6xl">
-            <Typewriter text="AMAURY DESPRETZ" speed={120} delay={600} />
-          </h1>
-          <h2 className="text-xl md:text-2xl font-light tracking-[0.2em] drop-shadow-lg text-white uppercase mt-2">
-            Étudiant à Eugenia School
-          </h2>
-          <p className="text-sm md:text-base font-light tracking-[0.4em] drop-shadow-lg text-gray-300 uppercase mt-1">
-            Portfolio
-          </p>
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-4">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-widest uppercase drop-shadow-xl text-center">
+          <Typewriter text="AMAURY DESPRETZ" speed={120} delay={600} />
+        </h1>
+        <h2 className="text-sm sm:text-lg md:text-2xl font-light tracking-[0.2em] drop-shadow-lg text-white uppercase mt-4 text-center">
+          Étudiant à Eugenia School
+        </h2>
+        <p className="text-[10px] sm:text-xs md:text-base font-light tracking-[0.4em] drop-shadow-lg text-gray-300 uppercase mt-2 text-center">
+          Portfolio
+        </p>
 
-          {/* Bouton Prendre RDV (Transparent) */}
-          <button 
-            onClick={() => setIsFormOpen(true)}
-            className="mt-8 px-8 py-3 bg-transparent border border-white/50 hover:bg-white hover:text-black transform text-white rounded-full transition-all duration-300 font-medium tracking-widest uppercase text-xs md:text-sm flex items-center gap-3 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
-          >
-            <span>Prendre RDV</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-          </button>
-        </div>
+        {/* Bouton Prendre RDV (Transparent) */}
+        <button 
+          onClick={() => setIsFormOpen(true)}
+          className="mt-8 md:mt-12 px-6 py-2.5 md:px-8 md:py-3 bg-transparent border border-white/50 hover:bg-white hover:text-black transform text-white rounded-full transition-all duration-300 font-medium tracking-widest uppercase text-[10px] md:text-sm flex items-center gap-3 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+        >
+          <span>Prendre RDV</span>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        </button>
+      </div>
+      
+      {/* 3 LIGNES DEFILEMENT */}
+      <div className="relative z-10 w-full flex flex-col gap-6 md:gap-8 pb-8 md:pb-12">
         
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 animate-bounce text-white/70">
-           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-           </svg>
-        </div>
-      </section>
-
-      {/* PROJECTS SECTION */}
-      <section className="relative z-10 min-h-screen pt-24 pb-12 overflow-hidden flex flex-col">
-        <h2 className="text-4xl md:text-5xl font-light tracking-[0.2em] uppercase mb-12 text-center text-white drop-shadow-md px-6">
-          Mes Projets
-        </h2>
-
-        {/* 
-          Container Défilant Horizontal 
-          snap-x et snap-mandatory forcent l'alignement de chaque carte.
-        */}
-        <div className="w-full pb-16">
-          <AutoScroll speed={1} gapClass="pr-8 gap-8">
-            <ProjectsTrack onOpenGallery={(images, idx) => setGallery({images, index: idx})} />
-          </AutoScroll>
-        </div>
-      </section>
-
-      {/* COMPÉTENCES SECTION */}
-      <section className="relative z-10 pt-12 pb-24 overflow-hidden flex flex-col">
-        <h2 className="text-3xl md:text-5xl font-light tracking-[0.2em] uppercase mb-12 text-center text-white drop-shadow-md px-6">
-          Mes Compétences
-        </h2>
-
-        {/* Container Défilant Horizontal pour les compétences */}
-        <div className="w-full pb-12">
-          <AutoScroll speed={1.5} gapClass="pr-6 gap-6">
-            {skillsList.map((skill, index) => (
-              <div key={index} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
-                <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white overflow-hidden p-2">
-                  {skill.image ? (
-                    <Image src={skill.image} alt={skill.name} width={48} height={48} className="w-full h-full object-contain" />
-                  ) : (
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      {skill.icon}
-                    </svg>
-                  )}
-                </div>
-                <h3 className="text-white font-medium tracking-widest uppercase text-[11px] md:text-sm leading-tight">
-                  {skill.name}
-                </h3>
-              </div>
-            ))}
-          </AutoScroll>
-        </div>
-      </section>
-
-      {/* PASSIONS SECTION */}
-      <section className="relative z-10 pt-4 pb-24 overflow-hidden flex flex-col">
-        <h2 className="text-3xl md:text-5xl font-light tracking-[0.2em] uppercase mb-12 text-center text-white drop-shadow-md px-6">
-          Mes Passions
-        </h2>
-
-        {/* Container Défilant Horizontal pour les Passions */}
-        <div className="w-full pb-12">
-          <AutoScroll speed={1.5} gapClass="pr-6 gap-6">
+        {/* Passions Track */}
+        <div className="w-full flex flex-col gap-2 md:gap-3">
+          <h3 className="text-white/60 text-[10px] md:text-xs uppercase tracking-[0.3em] font-light px-4 md:px-8">Mes Passions</h3>
+          <AutoScroll speed={0.6} gapClass="pr-3 gap-3 md:pr-4 md:gap-4">
             {passionsList.map((passion, index) => (
-              <div key={index} className="snap-center shrink-0 w-64 md:w-72 bg-black/40 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 p-6 flex items-center gap-5 transform transition-all hover:bg-black/60 hover:-translate-y-1 hover:border-white/40 cursor-default">
-                <div className="w-12 h-12 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div key={index} className="snap-center shrink-0 w-44 md:w-56 bg-white/5 backdrop-blur-md rounded-xl shadow-sm border border-white/10 p-2.5 md:p-4 flex items-center gap-3 transform transition-all cursor-default hover:bg-white/10">
+                <div className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white">
+                  <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     {passion.icon}
                   </svg>
                 </div>
-                <h3 className="text-white font-medium tracking-widest uppercase text-sm leading-tight">
+                <h3 className="text-white font-medium tracking-widest uppercase text-[9px] md:text-xs leading-tight">
                   {passion.name}
                 </h3>
               </div>
             ))}
           </AutoScroll>
         </div>
-      </section>
 
-      {/* CONTACT SECTION */}
-      <section className="relative z-10 w-full bg-black/80 backdrop-blur-lg border-t border-white/10 py-24 flex flex-col items-center justify-center">
-        <h2 className="text-3xl md:text-5xl font-light tracking-[0.2em] uppercase mb-16 text-center text-white drop-shadow-md px-6">
-          Let&apos;s work together !
-        </h2>
-        
-        <div className="flex flex-col items-center gap-10 text-center">
-          {/* Bouton Prendre RDV */}
-          <button 
-            onClick={() => setIsFormOpen(true)}
-            className="px-10 py-4 md:px-12 md:py-5 bg-[#0082C3] hover:bg-[#006090] hover:-translate-y-1 transform text-white rounded-full transition-all font-bold tracking-widest uppercase text-sm md:text-base shadow-[0_10px_30px_rgba(0,130,195,0.3)] hover:shadow-[0_15px_40px_rgba(0,130,195,0.5)] flex items-center gap-3"
-          >
-            <span>Prendre RDV</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-          </button>
-
-          <div className="flex flex-col gap-4 text-xl md:text-2xl font-light tracking-widest mt-2">
-            <a href="mailto:despretzamaury@gmail.com" className="text-gray-200 hover:text-white transition-colors duration-300">
-              despretzamaury@gmail.com
-            </a>
-            <a href="mailto:adespretz@eugeniaschool.com" className="text-gray-200 hover:text-white transition-colors duration-300">
-              adespretz@eugeniaschool.com
-            </a>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 mt-4 text-lg md:text-xl font-light tracking-widest text-gray-300">
-            <a href="https://instagram.com/amau_dsp" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all transform hover:scale-105">
-              Insta : @amau_dsp
-            </a>
-            <a href="https://linkedin.com/in/amaury-despretz" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-all transform hover:scale-105">
-              LinkedIn : Amaury Despretz
-            </a>
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-white/10 w-64">
-            <p className="text-sm md:text-base font-light tracking-[0.3em] uppercase text-gray-400">
-              Paris – France
-            </p>
-          </div>
+        {/* Compétences Track */}
+        <div className="w-full flex flex-col gap-2 md:gap-3">
+          <h3 className="text-white/60 text-[10px] md:text-xs uppercase tracking-[0.3em] font-light px-4 md:px-8">Mes Compétences</h3>
+          <AutoScroll speed={0.5} gapClass="pr-3 gap-3 md:pr-4 md:gap-4">
+            {skillsList.map((skill, index) => (
+              <div key={index} className="snap-center shrink-0 w-44 md:w-56 bg-white/5 backdrop-blur-md rounded-xl shadow-sm border border-white/10 p-2.5 md:p-4 flex items-center gap-3 transform transition-all cursor-default hover:bg-white/10">
+                <div className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center text-white overflow-hidden p-1.5 md:p-2">
+                  {skill.image ? (
+                    <Image src={skill.image} alt={skill.name} width={40} height={40} className="w-full h-full object-contain" />
+                  ) : (
+                    <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      {skill.icon}
+                    </svg>
+                  )}
+                </div>
+                <h3 className="text-white font-medium tracking-widest uppercase text-[9px] md:text-xs leading-tight">
+                  {skill.name}
+                </h3>
+              </div>
+            ))}
+          </AutoScroll>
         </div>
-      </section>
+
+        {/* Projets Track */}
+        <div className="w-full flex flex-col gap-2 md:gap-3">
+          <h3 className="text-white/60 text-[10px] md:text-xs uppercase tracking-[0.3em] font-light px-4 md:px-8">Mes Projets</h3>
+          <AutoScroll speed={0.4} gapClass="pr-3 gap-3 md:pr-4 md:gap-4">
+            {projectsList.map((proj, index) => (
+              <div key={index} onClick={() => setActiveProject(index)} className="cursor-pointer snap-center shrink-0 w-44 md:w-56 bg-white/10 backdrop-blur-md rounded-xl shadow-sm border border-white/20 p-3.5 md:p-5 flex items-center justify-center transform transition-all hover:bg-white/20 hover:-translate-y-1 hover:shadow-lg">
+                <h3 className="text-white font-bold tracking-widest uppercase text-[10px] md:text-xs leading-tight text-center">
+                  {proj.name}
+                </h3>
+              </div>
+            ))}
+          </AutoScroll>
+        </div>
+
+      </div>
     </main>
   );
 }
+
